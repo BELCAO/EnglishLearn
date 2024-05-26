@@ -134,10 +134,16 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         int id = v.getId();
 
-        // Nếu click "Chọn từ" sẽ chuyển sang màn hình ChooseVocabularyActivity đồng thời truyền đi danh sách từ vựng cần luyện
+        /**
+         * Nếu click "Chọn từ" sẽ chuyển sang màn hình ChooseVocabularyActivity
+         * Đồng thời truyền đi danh sách từ vựng cần luyện của bài học
+         */
         if(id == R.id.btn_choose_vocabulary) {
+            int offset = spnLesson.getSelectedItemPosition() * LIMIT;
+            List<Vocabulary> targetVocabulary = new ArrayList<>(vocabularyList.subList(offset, Math.min(LIMIT, size)));
+
             Intent intent = new Intent(requireActivity(), ChooseVocabularyActivity.class);
-            intent.putExtra("list_vocabulary", (Serializable) vocabularyList);
+            intent.putExtra("list_vocabulary", (Serializable) targetVocabulary);
             startActivity(intent);
         }
     }
