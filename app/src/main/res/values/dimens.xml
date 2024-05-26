@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- text   -->
+    <dimen name="text_normal">16sp</dimen>
+    <dimen name="text_large">24sp</dimen>
+    <dimen name="text_big">32sp</dimen>
+
+    <!-- margin, padding   -->
+    <dimen name="padding_activity">16dp</dimen>
+</resources>
