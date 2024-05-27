@@ -16,10 +16,10 @@ import com.example.myapplication.R;
 import com.example.myapplication.domain.model.Question;
 import com.example.myapplication.domain.model.Vocabulary;
 import com.example.myapplication.domain.service.QuestionService;
+import com.example.myapplication.domain.service.database.DatabaseHelper;
 import com.example.myapplication.view.adapter.QuestionAdapter;
 
 import java.util.List;
-import java.util.Map;
 
 public class ChooseVocabularyActivity extends AppCompatActivity {
 
@@ -28,6 +28,7 @@ public class ChooseVocabularyActivity extends AppCompatActivity {
     private QuestionService questionService;
     private QuestionAdapter questionAdapter;
     private Button btnSubmit;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,6 @@ public class ChooseVocabularyActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,11 +49,13 @@ public class ChooseVocabularyActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rcv_questions);
         btnSubmit = findViewById(R.id.btn_submit);
 
+        dbHelper = DatabaseHelper.getInstance(this);
+        questionService = new QuestionService(dbHelper);
+
         // Lấy danh sách từ vựng cần luyện trong bài học
         vocabularyList = (List<Vocabulary>) getIntent().getSerializableExtra("list_vocabulary");
 
         // Tạo danh sách câu hỏi
-        questionService = new QuestionService();
         List<Question> questions = questionService.generateQuestions(vocabularyList, 10);
 
         // Hiển thị danh sách câu hỏi bằng RecyclerView

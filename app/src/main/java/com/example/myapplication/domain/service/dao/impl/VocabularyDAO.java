@@ -16,7 +16,6 @@ public class VocabularyDAO implements IVocabularyDAO {
     private DatabaseHelper dbHelper;
 
     private VocabularyDAO() {
-
     }
 
     private VocabularyDAO(DatabaseHelper dbHelper) {
@@ -43,15 +42,29 @@ public class VocabularyDAO implements IVocabularyDAO {
 
     @Override
     public List<Vocabulary> findAll() {
-        return null;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        List<Vocabulary> vocabularyList = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT * FROM vocabularies", null);
+
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String word = cursor.getString(1);
+            String mean = cursor.getString(2);
+            int courseId = cursor.getInt(3);
+
+            Vocabulary v = new Vocabulary(id, word, mean, courseId);
+            vocabularyList.add(v);
+        }
+        db.close();
+        cursor.close();
+        return vocabularyList;
     }
 
     @Override
     public List<Vocabulary> find(int courseId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<Vocabulary> vocabularyList = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT * FROM vocabularies WHERE courseId=?",
-                new String[] {String.valueOf(courseId)});
+        Cursor cursor = db.rawQuery("SELECT * FROM vocabularies WHERE courseId=?", new String[]{String.valueOf(courseId)});
 
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
@@ -68,19 +81,31 @@ public class VocabularyDAO implements IVocabularyDAO {
 
     @Override
     public int update(Vocabulary vocabulary) {
-        return 0;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("word", vocabulary.getWord());
+        values.put("mean", vocabulary.getMean());
+        values.put("courseId", vocabulary.getCourseId());
+
+        int rowsAffected = db.update("vocabularies", values, "id=?", new String[]{String.valueOf(vocabulary.getId())});
+        db.close();
+        return rowsAffected;
     }
 
     @Override
     public int delete(Vocabulary vocabulary) {
-        return 0;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowsAffected = db.delete("vocabularies", "id=?", new String[]{String.valueOf(vocabulary.getId())});
+        db.close();
+        return rowsAffected;
     }
 
     private static class VocabularyDAOHelper {
         private static VocabularyDAO INSTANCE;
 
         public static VocabularyDAO getInstance(DatabaseHelper dbHelper) {
-            if(INSTANCE == null) {
+            if (INSTANCE == null) {
                 INSTANCE = new VocabularyDAO(dbHelper);
             }
             return INSTANCE;
