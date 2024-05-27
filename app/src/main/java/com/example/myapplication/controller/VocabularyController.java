@@ -24,10 +24,20 @@ public class VocabularyController {
         return instance;
     }
 
+    /**
+     * Tìm danh sách từ vựng của khóa học
+     * @param courseId
+     * @return
+     */
     public List<Vocabulary> find(int courseId) {
         return VocabularyDAO.getInstance(dbHelper).find(courseId);
     }
 
+    /**
+     * Tìm danh sách chi tiết từ vựng của 1 từ vựng
+     * @param vocabularyId
+     * @return
+     */
     public List<DetailVocabulary> findDetailVocabulary(int vocabularyId) {
         return DetailVocabularyDAO.getInstance(dbHelper).find(vocabularyId);
     }

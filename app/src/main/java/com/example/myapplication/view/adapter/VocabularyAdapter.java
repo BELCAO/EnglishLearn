@@ -31,6 +31,10 @@ public class VocabularyAdapter extends RecyclerView.Adapter<VocabularyAdapter.Vi
         this.vocabularyList = vocabularyList;
     }
 
+    public List<Vocabulary> getVocabularyList() {
+        return vocabularyList;
+    }
+
     @NonNull
     @Override
     public VocabularyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -69,6 +73,9 @@ public class VocabularyAdapter extends RecyclerView.Adapter<VocabularyAdapter.Vi
             viewVocabulary.setOnClickListener(this);
             imvSpeaker.setOnClickListener(this);
 
+            /**
+             * Tạo phát âm cho hệ thống là US
+             */
             textToSpeech = new TextToSpeech(itemView.getContext(), new TextToSpeech.OnInitListener() {
                 @Override
                 public void onInit(int status) {
@@ -79,6 +86,10 @@ public class VocabularyAdapter extends RecyclerView.Adapter<VocabularyAdapter.Vi
             });
         }
 
+        /**
+         * Ánh xạ view với dữ liệu của vocabulary
+         * @param vocabulary
+         */
         public void initView(Vocabulary vocabulary) {
             this.vocabulary = vocabulary;
 
