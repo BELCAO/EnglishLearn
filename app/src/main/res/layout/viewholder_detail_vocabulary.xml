@@ -43,7 +43,7 @@
         android:gravity="center_vertical">
 
         <ImageView
-            android:id="@+id/btn_speak"
+            android:id="@+id/imv_speaker"
             android:src="@drawable/outline_volume_up_24"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -52,14 +52,14 @@
         <TextView
             android:id="@+id/tv_sample_sentence"
             android:text="Historical subject"
-            android:layout_toEndOf="@id/btn_speak"
+            android:layout_toEndOf="@id/imv_speaker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/tv_sample_sentence_mean"
             android:text="Chủ đề lịch sử"
-            android:layout_below="@id/btn_speak"
+            android:layout_below="@id/imv_speaker"
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

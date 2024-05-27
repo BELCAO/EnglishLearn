@@ -1,8 +1,10 @@
 package com.example.myapplication.view.adapter;
 
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.domain.model.DetailVocabulary;
 
 import java.util.List;
+import java.util.Locale;
 
 public class DetailVocabularyAdapter extends RecyclerView.Adapter<DetailVocabularyAdapter.ViewHolder> {
 
@@ -43,6 +46,9 @@ public class DetailVocabularyAdapter extends RecyclerView.Adapter<DetailVocabula
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvType, tvWordMean, tvSampleSentence, tvSampleSentenceMean;
+        ImageView imvSpeaker;
+        TextToSpeech textToSpeech;
+        DetailVocabulary detailVocabulary;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,9 +57,24 @@ public class DetailVocabularyAdapter extends RecyclerView.Adapter<DetailVocabula
             tvWordMean = itemView.findViewById(R.id.tv_word_mean);
             tvSampleSentence = itemView.findViewById(R.id.tv_sample_sentence);
             tvSampleSentenceMean = itemView.findViewById(R.id.tv_sample_sentence_mean);
+            imvSpeaker = itemView.findViewById(R.id.imv_speaker);
+
+            textToSpeech = new TextToSpeech(itemView.getContext(), status -> {
+                if(status == TextToSpeech.SUCCESS) {
+                    textToSpeech.setLanguage(Locale.US);
+                }
+            });
+
+            imvSpeaker.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    textToSpeech.speak(detailVocabulary.getSampleSentence(), TextToSpeech.QUEUE_FLUSH, null, null);
+                }
+            });
         }
 
         public void initView(DetailVocabulary detailVocabulary) {
+            this.detailVocabulary = detailVocabulary;
             tvType.setText(detailVocabulary.getType());
             tvWordMean.setText(detailVocabulary.getWordMean());
             tvSampleSentence.setText(detailVocabulary.getSampleSentence());
