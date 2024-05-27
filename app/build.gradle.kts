@@ -40,4 +40,8 @@ dependencies {
     testImplementation ("androidx.test.espresso:espresso-core:3.5.1")
     implementation("androidx.test:core:1.5.0")
     androidTestImplementation("junit:junit:4.12")
+    implementation("androidx.fragment:fragment:1.3.6")
+
+    // AndroidX RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 }
