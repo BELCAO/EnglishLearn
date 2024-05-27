@@ -1,6 +1,8 @@
 package com.example.myapplication.controller;
 
+import com.example.myapplication.domain.model.DetailVocabulary;
 import com.example.myapplication.domain.model.Vocabulary;
+import com.example.myapplication.domain.service.dao.impl.DetailVocabularyDAO;
 import com.example.myapplication.domain.service.dao.impl.VocabularyDAO;
 import com.example.myapplication.domain.service.database.DatabaseHelper;
 
@@ -24,5 +26,9 @@ public class VocabularyController {
 
     public List<Vocabulary> find(int courseId) {
         return VocabularyDAO.getInstance(dbHelper).find(courseId);
+    }
+
+    public List<DetailVocabulary> findDetailVocabulary(int vocabularyId) {
+        return DetailVocabularyDAO.getInstance(dbHelper).find(vocabularyId);
     }
 }
