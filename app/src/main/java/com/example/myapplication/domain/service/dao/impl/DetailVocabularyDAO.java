@@ -28,6 +28,10 @@ public class DetailVocabularyDAO implements IDetailVocabularyDAO {
         return DetailVocabularyDAO.DetailVocabularyDAOHelper.getInstance(dbHelper);
     }
 
+    /**
+     * Thêm chi tiết từ vựng mới vào database
+     * @param detailVocabulary
+     */
     @Override
     public void insert(DetailVocabulary detailVocabulary) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -49,6 +53,11 @@ public class DetailVocabularyDAO implements IDetailVocabularyDAO {
         return null;
     }
 
+    /**
+     * Tìm danh sách chi tiết từ vựng dựa vào mã 1 từ vựng
+     * @param vocabularyId
+     * @return
+     */
     @Override
     public List<DetailVocabulary> find(int vocabularyId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();

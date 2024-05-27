@@ -59,12 +59,18 @@ public class DetailVocabularyAdapter extends RecyclerView.Adapter<DetailVocabula
             tvSampleSentenceMean = itemView.findViewById(R.id.tv_sample_sentence_mean);
             imvSpeaker = itemView.findViewById(R.id.imv_speaker);
 
+            /**
+             * Tạo phát âm hệ thống là US
+             */
             textToSpeech = new TextToSpeech(itemView.getContext(), status -> {
                 if(status == TextToSpeech.SUCCESS) {
                     textToSpeech.setLanguage(Locale.US);
                 }
             });
 
+            /**
+             * Bắt sự kiện click vào cái loa sẽ đọc câu ví dụ (sampleSentence)
+             */
             imvSpeaker.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
