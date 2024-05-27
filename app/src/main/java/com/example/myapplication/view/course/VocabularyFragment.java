@@ -140,7 +140,7 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
          */
         if(id == R.id.btn_choose_vocabulary) {
             int offset = spnLesson.getSelectedItemPosition() * LIMIT;
-            List<Vocabulary> targetVocabulary = new ArrayList<>(vocabularyList.subList(offset, Math.min(LIMIT, size)));
+            List<Vocabulary> targetVocabulary = new ArrayList<>(vocabularyList.subList(offset, Math.min(offset + LIMIT, size)));
 
             Intent intent = new Intent(requireActivity(), ChooseVocabularyActivity.class);
             intent.putExtra("list_vocabulary", (Serializable) targetVocabulary);
