@@ -1,4 +1,4 @@
-package com.example.myapplication.domain.service;
+package com.example.myapplication.controller;
 
 import com.example.myapplication.domain.model.Question;
 import com.example.myapplication.domain.model.Vocabulary;
@@ -10,11 +10,11 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class QuestionService {
+public class QuestionController {
 
     private VocabularyDAO vocabularyDAO;
 
-    public QuestionService(DatabaseHelper dbHelper) {
+    public QuestionController(DatabaseHelper dbHelper) {
         this.vocabularyDAO = VocabularyDAO.getInstance(dbHelper);
     }
 

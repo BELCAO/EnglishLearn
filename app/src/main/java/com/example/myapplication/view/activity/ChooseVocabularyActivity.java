@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.domain.model.Question;
 import com.example.myapplication.domain.model.Vocabulary;
-import com.example.myapplication.domain.service.QuestionService;
+import com.example.myapplication.controller.QuestionController;
 import com.example.myapplication.domain.service.database.DatabaseHelper;
 import com.example.myapplication.view.adapter.QuestionAdapter;
 
@@ -25,7 +24,7 @@ public class ChooseVocabularyActivity extends AppCompatActivity {
 
     private List<Vocabulary> vocabularyList;
     private RecyclerView recyclerView;
-    private QuestionService questionService;
+    private QuestionController questionService;
     private QuestionAdapter questionAdapter;
     private Button btnSubmit;
     private DatabaseHelper dbHelper;
@@ -50,7 +49,7 @@ public class ChooseVocabularyActivity extends AppCompatActivity {
         btnSubmit = findViewById(R.id.btn_submit);
 
         dbHelper = DatabaseHelper.getInstance(this);
-        questionService = new QuestionService(dbHelper);
+        questionService = new QuestionController(dbHelper);
 
         // Lấy danh sách từ vựng cần luyện trong bài học
         vocabularyList = (List<Vocabulary>) getIntent().getSerializableExtra("list_vocabulary");
