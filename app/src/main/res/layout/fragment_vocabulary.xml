@@ -49,7 +49,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_choose_vocabulary"
-            android:text="Chọn từ"
+            android:text="Luyện từ"
             app:cornerRadius="4dp"
             android:backgroundTint="@color/white"
             android:textColor="@color/black"

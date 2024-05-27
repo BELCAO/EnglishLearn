@@ -22,6 +22,13 @@ public class Vocabulary implements Serializable {
         this.courseId = courseId;
     }
 
+    public Vocabulary(int id, String word, String mean, int courseId) {
+        this.id = id;
+        this.word = word;
+        this.mean = mean;
+        this.courseId = courseId;
+    }
+
     public int getId() {
         return id;
     }

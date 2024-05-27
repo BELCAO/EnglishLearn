@@ -44,7 +44,22 @@ public class VocabularyDAO implements IVocabularyDAO {
 
     @Override
     public List<Vocabulary> findAll() {
-        return null;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        List<Vocabulary> vocabularyList = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT * FROM vocabularies", null);
+
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String word = cursor.getString(1);
+            String mean = cursor.getString(2);
+            int courseId = cursor.getInt(3);
+
+            Vocabulary v = new Vocabulary(id, word, mean, courseId);
+            vocabularyList.add(v);
+        }
+        db.close();
+        cursor.close();
+        return vocabularyList;
     }
 
     @Override
