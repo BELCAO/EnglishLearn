@@ -11,19 +11,17 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/AppBar"
         android:fitsSystemWindows="true">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/primary"
             app:title="Luyện từ vựng"
-            app:titleTextColor="@android:color/white"
             app:navigationIcon="@drawable/baseline_arrow_back_ios_new_24"
+            app:navigationIconTint="@color/white"
             style="@style/Toolbar"
-            android:fitsSystemWindows="true"/>
+            android:fitsSystemWindows="true" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -1,4 +1,4 @@
-package com.example.myapplication.domain.service;
+package com.example.myapplication.controller;
 
 import com.example.myapplication.domain.model.Question;
 import com.example.myapplication.domain.model.Vocabulary;
@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class QuestionService {
+public class QuestionController {
     public List<Question> generateQuestions(List<Vocabulary> vocabularyList, int numberOfQuestions) {
         List<Question> questions = new ArrayList<>();
         Random random = new Random();

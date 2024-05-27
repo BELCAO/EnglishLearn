@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,17 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.domain.model.Question;
 import com.example.myapplication.domain.model.Vocabulary;
-import com.example.myapplication.domain.service.QuestionService;
+import com.example.myapplication.controller.QuestionController;
 import com.example.myapplication.view.adapter.QuestionAdapter;
 
 import java.util.List;
-import java.util.Map;
 
 public class ChooseVocabularyActivity extends AppCompatActivity {
 
     private List<Vocabulary> vocabularyList;
     private RecyclerView recyclerView;
-    private QuestionService questionService;
+    private QuestionController questionController;
     private QuestionAdapter questionAdapter;
     private Button btnSubmit;
 
@@ -53,8 +51,8 @@ public class ChooseVocabularyActivity extends AppCompatActivity {
         vocabularyList = (List<Vocabulary>) getIntent().getSerializableExtra("list_vocabulary");
 
         // Tạo danh sách câu hỏi
-        questionService = new QuestionService();
-        List<Question> questions = questionService.generateQuestions(vocabularyList, 10);
+        questionController = new QuestionController();
+        List<Question> questions = questionController.generateQuestions(vocabularyList, 10);
 
         // Hiển thị danh sách câu hỏi bằng RecyclerView
         questionAdapter = new QuestionAdapter(questions);
