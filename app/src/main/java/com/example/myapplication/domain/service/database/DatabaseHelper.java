@@ -14,8 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.myapplication.domain.model.Course;
+import com.example.myapplication.domain.model.DetailVocabulary;
 import com.example.myapplication.domain.model.Vocabulary;
 import com.example.myapplication.domain.service.dao.impl.CourseDAO;
+import com.example.myapplication.domain.service.dao.impl.DetailVocabularyDAO;
 import com.example.myapplication.domain.service.dao.impl.VocabularyDAO;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         createCourses(db);
         createVocabulary(db);
+        createVocabularyDetail(db);
     }
 
     public void createData() {
@@ -48,47 +51,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         courseDAO.insert(new Course(4, "TOEIC (800+)", 2500000));
 
         VocabularyDAO vocabularyDAO = VocabularyDAO.getInstance(this);
-        vocabularyDAO.insert(new Vocabulary(1, "Order", "Đơn hàng / đặt hàng (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(2, "Subject", "Chủ đề (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(3, "Achievement", "Thành tựu (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(4, "Boundary", "Ranh giới (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(5, "Challenge", "Thách thức (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(6, "Diversity", "Sự đa dạng (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(7, "Efficiency", "Hiệu suất (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(8, "Flexibility", "Tính linh hoạt (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(9, "Growth", "Sự phát triển (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(10, "Harmony", "Sự hòa thuận (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(11, "Innovation", "Sự đổi mới (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(12, "Knowledge", "Kiến thức (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(13, "Leadership", "Lãnh đạo (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(14, "Motivation", "Dong viên (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(15, "Opportunity", "Cơ hội (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(16, "Perseverance", "Sự kiên trì (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(17, "Quality", "Chất lượng (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(18, "Resilience", "Sự đàn hồi (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(19, "Sustainability", "Tính bền vững (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(20, "Teamwork", "Làm việc nhóm (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(21, "Understanding", "Sự hiểu biết (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(22, "Value", "Giá trị (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(23, "Wisdom", "Sự khôn ngoan (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(24, "Xenophobia", "Kỳ thị người nước ngoài (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(25, "Youth", "Tuổi trẻ (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(26, "Zeal", "Nhiệt huyết (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(27, "Revolution", "Cuộc cách mạng (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(28, "Revolutionary", "Mang tính cách mạng (adj)", 1));
-        vocabularyDAO.insert(new Vocabulary(29, "Exploration", "Sự khám phá (n)", 1));
-        vocabularyDAO.insert(new Vocabulary(30, "Exploratory", "Mang tính khám phá (adj)", 1));
+        vocabularyDAO.insert(new Vocabulary(1, "Subject", "Chủ đề (n)", "/ˈsʌb.dʒɪkt/", 1));
+        vocabularyDAO.insert(new Vocabulary(2, "Open", "Mở (n)", "/ˈoʊpən/", 1));
+        vocabularyDAO.insert(new Vocabulary(3, "Purpose", "Mục đích (n)", "/ˈpɝː.pəs/", 1));
+        vocabularyDAO.insert(new Vocabulary(4, "Report", "Báo cáo (v)", "/rɪˈpɔːrt/", 1));
+        vocabularyDAO.insert(new Vocabulary(5, "Project", "Dự án (n)", "/ˈprɑː.dʒekt/", 1));
+        vocabularyDAO.insert(new Vocabulary(6, "Development", "Phát triển (n)", "/dɪˈvel.əp.mənt/", 1));
+        vocabularyDAO.insert(new Vocabulary(7, "Requirement", "Yêu cầu (n)", "/rɪˈkwaɪər.mənt/", 1));
+        vocabularyDAO.insert(new Vocabulary(8, "Budget", "Ngân sách (n)", "/ˈbʌdʒ.ɪt/", 1));
+        vocabularyDAO.insert(new Vocabulary(9, "Meeting", "Cuộc họp (n)", "/ˈmiː.tɪŋ/", 1));
+        vocabularyDAO.insert(new Vocabulary(10, "Schedule", "Lịch trình (n)", "/ˈskedʒ.uːl/", 1));
+        vocabularyDAO.insert(new Vocabulary(11, "Analysis", "Phân tích (n)", "/əˈnæl.ə.sɪs/", 1));
+        vocabularyDAO.insert(new Vocabulary(12, "Resource", "Tài nguyên (n)", "/ˈriː.sɔːrs/", 1));
+        vocabularyDAO.insert(new Vocabulary(13, "Plan", "Kế hoạch (n)", "/plæn/", 1));
+        vocabularyDAO.insert(new Vocabulary(14, "Strategy", "Chiến lược (n)", "/ˈstræt.ə.dʒi/", 1));
+        vocabularyDAO.insert(new Vocabulary(15, "Team", "Nhóm (n)", "/tiːm/", 1));
+        vocabularyDAO.insert(new Vocabulary(16, "Client", "Khách hàng (n)", "/ˈklaɪ.ənt/", 1));
+        vocabularyDAO.insert(new Vocabulary(17, "Feedback", "Phản hồi (n)", "/ˈfiːd.bæk/", 1));
+        vocabularyDAO.insert(new Vocabulary(18, "Improvement", "Cải tiến (n)", "/ɪmˈpruːv.mənt/", 1));
+        vocabularyDAO.insert(new Vocabulary(19, "Performance", "Hiệu suất (n)", "/pərˈfɔːr.məns/", 1));
+        vocabularyDAO.insert(new Vocabulary(20, "Objective", "Mục tiêu (n)", "/əbˈdʒek.tɪv/", 1));
 
-        vocabularyDAO.insert(new Vocabulary(31, "Artificial Intelligence", "Trí tuệ nhân tạo (n)", 2));
-        vocabularyDAO.insert(new Vocabulary(32, "Blockchain", "Chuỗi khối (n)", 2));
-        vocabularyDAO.insert(new Vocabulary(33, "Cybersecurity", "An ninh mạng (n)", 2));
-        vocabularyDAO.insert(new Vocabulary(34, "Big Data", "Dữ liệu lớn (n)", 2));
-        vocabularyDAO.insert(new Vocabulary(35, "Cloud Computing", "Máy chủ đám mây (n)", 2));
-        vocabularyDAO.insert(new Vocabulary(36, "Internet of Things (IoT)", "Internet của mọi vật (n)", 2));
-        vocabularyDAO.insert(new Vocabulary(37, "Machine Learning", "Học máy (n)", 2));
-        vocabularyDAO.insert(new Vocabulary(38, "Virtual Reality", "Thực tế ảo (n)", 2));
-        vocabularyDAO.insert(new Vocabulary(39, "Augmented Reality", "Thực tế tăng cường (n)", 2));
-        vocabularyDAO.insert(new Vocabulary(40, "Data Science", "Khoa học dữ liệu (n)", 2));
+        vocabularyDAO.insert(new Vocabulary(1, "Absorb", "Hấp thụ (v)", "/əbˈsɔːrb/", 2));
+        vocabularyDAO.insert(new Vocabulary(2, "Challenge", "Thách thức (n)", "/ˈtʃæl.ɪndʒ/", 2));
+        vocabularyDAO.insert(new Vocabulary(3, "Contribute", "Đóng góp (v)", "/kənˈtrɪb.juːt/", 2));
+        vocabularyDAO.insert(new Vocabulary(4, "Delegate", "Ủy quyền (v)", "/ˈdel.ɪ.ɡeɪt/", 2));
+        vocabularyDAO.insert(new Vocabulary(5, "Emerge", "Nổi lên (v)", "/ɪˈmɜːrdʒ/", 2));
+        vocabularyDAO.insert(new Vocabulary(6, "Generate", "Tạo ra (v)", "/ˈdʒen.ə.reɪt/", 2));
+        vocabularyDAO.insert(new Vocabulary(7, "Innovate", "Đổi mới (v)", "/ˈɪn.ə.veɪt/", 2));
+        vocabularyDAO.insert(new Vocabulary(8, "Persuade", "Thuyết phục (v)", "/pərˈsweɪd/", 2));
+        vocabularyDAO.insert(new Vocabulary(9, "Revise", "Sửa đổi (v)", "/rɪˈvaɪz/", 2));
+        vocabularyDAO.insert(new Vocabulary(10, "Simulate", "Mô phỏng (v)", "/ˈsɪm.jə.leɪt/", 2));
+
+        DetailVocabularyDAO detailVocabularyDAO = DetailVocabularyDAO.getInstance(this);
+        detailVocabularyDAO.insert(
+                new DetailVocabulary(1, 1, "Danh từ", "Chủ đề, vấn đề, đề tài",
+                        "Historical subject", "Chủ đề lịch sử"));
+        detailVocabularyDAO.insert(
+                new DetailVocabulary(2, 1, "Tính từ", "Lệ thuộc, ở dưới quyền",
+                        "The subject nations", "Những nước lệ thuộc"));
+        detailVocabularyDAO.insert(
+                new DetailVocabulary(3, 1, "Ngoại động từ", "Chinh phục, khuất phục",
+                        "Must be subjected to great heat", "Phải chịu một độ nhiệt cao"));
+
+        detailVocabularyDAO.insert(
+                new DetailVocabulary(1, 2, "Danh từ", "Chỗ ngoài trời, chỗ thoáng mát",
+                        "In the open", "Ở ngoài trời, giữa thanh thiên bạch nhật"));
+        detailVocabularyDAO.insert(
+                new DetailVocabulary(2, 2, "Tính từ", "Mở, ngỏ",
+                        "An open letter", "Bức thư ngỏ"));
+        detailVocabularyDAO.insert(
+                new DetailVocabulary(3, 2, "Ngoại động từ", "Mở, bắt đầu, khai mạc",
+                        "To open a business", "Bắt đầu kinh doanh"));
     }
 
     @Override
@@ -105,11 +119,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    private void createVocabularyDetail(SQLiteDatabase db) {
+        String query = "CREATE TABLE IF NOT EXISTS vocabulary_details (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "vocabularyId INTEGER, " +
+                "type TEXT, " +
+                "wordMean TEXT, " +
+                "sampleSentence TEXT, " +
+                "sampleSentenceMean TEXT, " +
+                "FOREIGN KEY(vocabularyId) REFERENCES vocabularies(id) ON DELETE CASCADE" +
+                ")";
+
+        db.execSQL(query);
+    }
+
     private void createVocabulary(SQLiteDatabase db) {
         String query = "CREATE TABLE IF NOT EXISTS vocabularies (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "word TEXT," +
                 "mean TEXT," +
+                "phonetic TEXT," +
                 "courseId INTEGER CONSTRAINT courseId REFERENCES courses(id) ON DELETE CASCADE)";
 
         db.execSQL(query);

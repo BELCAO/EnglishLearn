@@ -34,6 +34,7 @@ public class VocabularyDAO implements IVocabularyDAO {
         ContentValues values = new ContentValues();
         values.put("word", vocabulary.getWord());
         values.put("mean", vocabulary.getMean());
+        values.put("phonetic", vocabulary.getPhonetic());
         values.put("courseId", vocabulary.getCourseId());
 
         db.insert("vocabularies", null, values);
@@ -57,8 +58,9 @@ public class VocabularyDAO implements IVocabularyDAO {
             int id = cursor.getInt(0);
             String word = cursor.getString(1);
             String mean = cursor.getString(2);
+            String phonetic = cursor.getString(3);
 
-            Vocabulary v = new Vocabulary(id, word, mean, courseId);
+            Vocabulary v = new Vocabulary(id, word, mean, phonetic, courseId);
             vocabularyList.add(v);
         }
         db.close();

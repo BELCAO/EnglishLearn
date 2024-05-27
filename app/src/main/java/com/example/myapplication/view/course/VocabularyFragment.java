@@ -112,7 +112,7 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
     }
 
     /**
-     * Lấy ra danh sách từ vựng của khóa học từ database với mã khóa học
+     * Lấy ra danh sách từ vựng của khóa học từ database dựa vào mã khóa học
      * @param courseId
      */
     private void findVocabulary(int courseId) {
