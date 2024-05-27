@@ -51,7 +51,6 @@ public class CourseDAO implements ICourseDAO {
             int id = cursor.getInt(0);
             String name = cursor.getString(1);
             int price = cursor.getInt(2);
-
             Course c = new Course(id, name, price);
             courses.add(c);
         }
