@@ -42,4 +42,8 @@ dependencies {
     androidTestImplementation("junit:junit:4.12")
 
     implementation("com.google.android.flexbox:flexbox:3.0.0")
+    implementation("androidx.fragment:fragment:1.3.6")
+
+    // AndroidX RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 }

@@ -23,6 +23,8 @@
         <activity
             android:name=".view.activity.LessonActivity"
             android:exported="false" />
+        <activity android:name=".view.activity.DetailGrammarActivity">
+        </activity>
         <activity
             android:name=".view.activity.CourseActivity"
             android:exported="true">

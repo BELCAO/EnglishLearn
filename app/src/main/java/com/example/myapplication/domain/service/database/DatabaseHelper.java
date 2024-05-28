@@ -1,6 +1,6 @@
 package com.example.myapplication.domain.service.database;
 
-import static androidx.test.InstrumentationRegistry.getContext;
+//import static androidx.test.InstrumentationRegistry.getContext;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,10 +14,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.myapplication.domain.model.Course;
+import com.example.myapplication.domain.model.DetailGrammar;
 import com.example.myapplication.domain.model.DetailVocabulary;
+import com.example.myapplication.domain.model.Grammar;
 import com.example.myapplication.domain.model.Vocabulary;
 import com.example.myapplication.domain.service.dao.impl.CourseDAO;
+import com.example.myapplication.domain.service.dao.impl.DetailGrammarDAO;
 import com.example.myapplication.domain.service.dao.impl.DetailVocabularyDAO;
+import com.example.myapplication.domain.service.dao.impl.GrammarDAO;
 import com.example.myapplication.domain.service.dao.impl.VocabularyDAO;
 
 import java.util.ArrayList;
@@ -38,8 +42,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         createCourses(db);
+        createGrammar(db);
+        createDetailGrammar(db);
         createVocabulary(db);
         createVocabularyDetail(db);
+
     }
 
     /**
@@ -105,10 +112,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         detailVocabularyDAO.insert(
                 new DetailVocabulary(3, 2, "Ngoại động từ", "Mở, bắt đầu, khai mạc",
                         "To open a business", "Bắt đầu kinh doanh"));
+
+
+        // Thêm dữ liệu cho Grammar
+        GrammarDAO grammarDAO = GrammarDAO.getInstance(this);
+        grammarDAO.insert(new Grammar(1, "Present Simple", "Hiện Tai Đơn", "S + V1 + O", 1));
+        grammarDAO.insert(new Grammar(2, "Past Simple", "Quá khứ đơn", "S + V2/ED + O", 1));
+        grammarDAO.insert(new Grammar(3, "Present Perfect", "Hiện Tại Hoàn Thành", "We haven’t met for a long time", 1));
+        grammarDAO.insert(new Grammar(4, "Present continous", "Hiện Tại Tiếp Diễn", "She is dancing", 1));
+        //Thêm các mục Grammar khác vào đây
+
+        // Thêm dữ liệu cho DetailGrammar
+        DetailGrammarDAO detailGrammarDAO = DetailGrammarDAO.getInstance(this);
+        detailGrammarDAO.insert(new DetailGrammar(1, 1, "Danh từ", "Chủ đề (n)"));
+        detailGrammarDAO.insert(new DetailGrammar(2, 1, "Động từ", "Verb"));
+        detailGrammarDAO.insert(new DetailGrammar(3, 3, "S + have/has + V3/ed", "Where have you been all these years? "));
+        detailGrammarDAO.insert(new DetailGrammar(4, 4, "S + am/is/are + Ving", "They are building a boat "));
+        //Thêm các mục DetailGrammar khác vào đây
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        // Tạo lại bảng
 
     }
 
@@ -158,6 +184,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+
+    private void createGrammar(SQLiteDatabase db){
+        String createTableGrammar = "CREATE TABLE grammars (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "rule_name TEXT, " +
+                "description TEXT, " +
+                "example TEXT, " +
+                "courseId INTEGER)";
+        db.execSQL(createTableGrammar);
+    }
+
+
+    private void createDetailGrammar(SQLiteDatabase db){
+        String query = "CREATE TABLE IF NOT EXISTS grammar_details (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "grammarId INTEGER, " +
+                "detail TEXT NOT NULL, " +
+                "example TEXT, " +
+                "FOREIGN KEY(grammarId) REFERENCES grammar(id) ON DELETE CASCADE" +
+                ")";
+
+
+        db.execSQL(query);
+    }
 
     private static class DatabaseInstance {
         private static DatabaseHelper INSTANCE;

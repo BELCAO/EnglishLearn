@@ -56,7 +56,7 @@ public class LessonActivity extends AppCompatActivity {
 
         List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(new VocabularyFragment(courseId));
-        fragmentList.add(new GrammarFragment());
+        fragmentList.add(new GrammarFragment(courseId));
 
         viewPager2.setAdapter(new ViewPagerAdapter(this, fragmentList));
         new TabLayoutMediator(this.tabLayout, this.viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
