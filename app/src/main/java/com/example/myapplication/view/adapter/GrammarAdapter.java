@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.domain.model.DetailGrammar;
 import com.example.myapplication.domain.model.Grammar;
-
+import com.example.myapplication.view.activity.DetailGrammarActivity;
 
 
 import java.util.List;
@@ -67,7 +67,7 @@ public class GrammarAdapter extends RecyclerView.Adapter<GrammarAdapter.ViewHold
             viewGrammar.setOnClickListener(new View.OnClickListener()  {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(itemView.getContext(), DetailGrammar.class);
+                    Intent intent = new Intent(itemView.getContext(), DetailGrammarActivity.class);
                     intent.putExtra("grammar",  grammar);
                     itemView.getContext().startActivity(intent);
                 }

@@ -49,7 +49,7 @@ public class GrammarFragment extends Fragment implements View.OnClickListener {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbHelper = DatabaseHelper.getInstance(requireContext());
-        findVocabulary(courseId);
+        findGrammar(courseId);
     }
 
     @Nullable
@@ -70,7 +70,7 @@ public class GrammarFragment extends Fragment implements View.OnClickListener {
         btnChooseGrammar.setOnClickListener(this);
 
         initSpnLesson();
-        initVocabulary();
+        initGrammar();
     }
 
     /**
@@ -111,10 +111,10 @@ public class GrammarFragment extends Fragment implements View.OnClickListener {
     }
 
     /**
-     * Lấy ra danh sách từ vựng của khóa học từ database dựa vào mã khóa học
+     * Lấy ra danh sách ngữ pháp của khóa học từ database dựa vào mã khóa học
      * @param courseId
      */
-    private void findVocabulary(int courseId) {
+    private void findGrammar(int courseId) {
         grammarList = GrammarController.getInstance(dbHelper).find(courseId);
 
         size = grammarList.size();
@@ -123,7 +123,7 @@ public class GrammarFragment extends Fragment implements View.OnClickListener {
     /**
      * Ánh xạ danh sách từ vựng vào recycle view, hiển thị từ 0 đến LIMIT
      */
-    private void initVocabulary() {
+    private void initGrammar() {
         grammarAdapter = new GrammarAdapter(grammarList);
 
         rcvGrammar.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
@@ -135,8 +135,8 @@ public class GrammarFragment extends Fragment implements View.OnClickListener {
         int id = v.getId();
 
         /**
-         * Nếu click "Chọn từ" sẽ chuyển sang màn hình ChooseVocabularyActivity
-         * Đồng thời truyền đi danh sách từ vựng cần luyện của bài học
+         * Nếu click "Chọn từ" sẽ chuyển sang màn hình ChooseGrammarActivity
+         *
          */
         if(id == R.id.btn_choose_grammar) {
             int offset = spnLesson.getSelectedItemPosition() * LIMIT;

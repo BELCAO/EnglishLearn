@@ -40,7 +40,7 @@ public class DetailGrammarActivity extends AppCompatActivity {
 
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
-        rcvDetailGrammar = findViewById(R.id.rcv_detail_vocabulary);
+        rcvDetailGrammar = findViewById(R.id.rcv_detail_grammar);
 
         toolbar.setNavigationOnClickListener(v -> finish());
 
@@ -49,7 +49,7 @@ public class DetailGrammarActivity extends AppCompatActivity {
     }
 
     private void initVocabulary(Grammar grammar) {
-        TextView tvWord = findViewById(R.id.tv_word);
+        TextView tvWord = findViewById(R.id.tv_grammar);
         tvWord.setText(grammar.getRule_name());
 
         TextView tvPhonetic = findViewById(R.id.tv_phonetic);

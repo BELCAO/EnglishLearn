@@ -56,7 +56,8 @@ public class DetailGrammarAdapter extends RecyclerView.Adapter<DetailGrammarAdap
         }
 
         public void initView(DetailGrammar detailGrammar) {
-            tvType.setText(detailGrammar.getId());
+
+            tvType.setText(""+ detailGrammar.getId());
             tvExample.setText(detailGrammar.getExample());
             tvDescription.setText(detailGrammar.getDetail());
 //            tvSampleSentenceMean.setText(detailVocabulary.getSampleSentenceMean());
