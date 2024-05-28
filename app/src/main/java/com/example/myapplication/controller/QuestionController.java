@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 public class QuestionController {
 
     private VocabularyDAO vocabularyDAO;
@@ -22,6 +21,11 @@ public class QuestionController {
         List<Question> questions = new ArrayList<>();
         List<Vocabulary> allVocabularies = vocabularyDAO.findAll();
 
+        // Nếu tổng số từ vựng ít hơn 4, không thể tạo đủ câu hỏi
+        if (allVocabularies.size() < 4) {
+            return questions;
+        }
+
         for (Vocabulary vocab : vocabularyList) {
             List<String> options = new ArrayList<>();
             options.add(vocab.getMean());
@@ -30,7 +34,7 @@ public class QuestionController {
             Collections.shuffle(allVocabularies);
             int count = 0;
             for (Vocabulary otherVocab : allVocabularies) {
-                if (!otherVocab.getWord().equals(vocab.getWord())) {
+                if (!otherVocab.getWord().equals(vocab.getWord()) && !options.contains(otherVocab.getMean())) {
                     options.add(otherVocab.getMean());
                     count++;
                     if (count == 3) {
@@ -39,12 +43,18 @@ public class QuestionController {
                 }
             }
 
+            // Kiểm tra nếu không đủ 4 tùy chọn thì bỏ qua câu hỏi này
+            if (options.size() != 4) {
+                continue;
+            }
+
             // Shuffle options để trộn vị trí các đáp án
             Collections.shuffle(options);
 
             questions.add(new Question(vocab.getWord(), options, vocab.getMean()));
         }
 
-        return questions;
+        // Chỉ lấy số lượng câu hỏi cần thiết
+        return questions.size() > numQuestions ? questions.subList(0, numQuestions) : questions;
     }
 }
