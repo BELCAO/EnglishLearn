@@ -68,8 +68,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public void setEnrolledCoursesMap(Map<Integer, Boolean> enrolledCoursesMap) {
         this.enrolledCoursesMap = enrolledCoursesMap;
     }
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tvCourseName, tvCoursePrice;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView tvCourseName;
+        public TextView tvCoursePrice;
         Button btnRegister;
         private Course course;
         public ViewHolder(@NonNull View itemView) {
@@ -82,15 +83,19 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             btnRegister.setOnClickListener(this);
         }
 
+        /**
+         * Nếu khóa học có tính phí thì hiển thị giá tiền + nút đăng ký
+         * Nếu đã đăng ký (hoặc free) thì sẽ là nút "Học ngay"
+         * 1.Hiển thị danh sách khóa học gồm Tên và giá tiền
+         * @param course
+         * @param enrolledCoursesMap
+         */
         public void initView(Course course, Map<Integer, Boolean> enrolledCoursesMap) {
             this.course = course;
             tvCourseName.setText(course.getName());
             int price = course.getPrice();
             boolean isEnrolled = enrolledCoursesMap.containsKey(course.getId()) && enrolledCoursesMap.get(course.getId());
-            /**
-             * Nếu khóa học có tính phí thì hiển thị giá tiền + nút đăng ký
-             * Nếu đã đăng ký (hoặc free) thì sẽ là nút "Học ngay"
-             */
+
             if (isEnrolled || price ==0) {
                 enrolledCoursesMap.put(course.getId(), true);
                 tvCoursePrice.setText("");
@@ -105,7 +110,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
         /**
          *  Nếu khóa học miễn phí, người dùng có thể đăng ký mà không cần xác nhận
-         *  Hiển thị hộp thoại xác nhận đăng ký
+         *  2. Bấm đăng ký
+         *  3. Hiển thị hộp thoại xác nhận thanh toán (đăng ký)
          */
         @Override
         public void onClick(View v) {
@@ -143,6 +149,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         private void enrollCourse() {
             /**
              * cập nhật trạng thái đăng ký trong csdl, cập nhật nút đăng ký
+             * 4. Xác nhận đăng ký
+             * 5. Thông báo đăng ký thành công.
               */
             enrolledCoursesMap.put(course.getId(), true);
             Toast.makeText(itemView.getContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
