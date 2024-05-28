@@ -27,6 +27,10 @@ public class VocabularyDAO implements IVocabularyDAO {
         return VocabularyDAO.VocabularyDAOHelper.getInstance(dbHelper);
     }
 
+    /**
+     * Thêm từ vựng mới vào database
+     * @param vocabulary
+     */
     @Override
     public void insert(Vocabulary vocabulary) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -42,6 +46,10 @@ public class VocabularyDAO implements IVocabularyDAO {
         db.close();
     }
 
+    /**
+     * Tìm toàn bộ từ vựng có trong database
+     * @return
+     */
     @Override
     public List<Vocabulary> findAll() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -62,6 +70,11 @@ public class VocabularyDAO implements IVocabularyDAO {
         return vocabularyList;
     }
 
+    /**
+     * Tìm danh sách từ vựng dựa vào mã khóa học
+     * @param courseId
+     * @return
+     */
     @Override
     public List<Vocabulary> find(int courseId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();

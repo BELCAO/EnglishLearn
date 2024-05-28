@@ -30,11 +30,17 @@ public class DetailVocabularyActivity extends AppCompatActivity {
 
         dbHelper = DatabaseHelper.getInstance(this);
 
+        /**
+         * Lấy ra từ vựng
+         */
         Intent intent = getIntent();
         vocabulary = (Vocabulary) intent.getSerializableExtra("vocabulary");
         initView();
     }
 
+    /**
+     * Ánh xạ view
+     */
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
         rcvDetailVocabulary = findViewById(R.id.rcv_detail_vocabulary);
@@ -45,6 +51,10 @@ public class DetailVocabularyActivity extends AppCompatActivity {
         initRcvDetailVocabulary(vocabulary.getId());
     }
 
+    /**
+     * Ánh xạ dữ liệu vocabulary lên view
+     * @param vocabulary
+     */
     private void initVocabulary(Vocabulary vocabulary) {
         TextView tvWord = findViewById(R.id.tv_word);
         tvWord.setText(vocabulary.getWord());
@@ -55,6 +65,11 @@ public class DetailVocabularyActivity extends AppCompatActivity {
         toolbar.setTitle(vocabulary.getWord());
     }
 
+    /**
+     * Tìm danh sách detailVocabulary dựa vào mã id từ vựng
+     * Ánh xạ dữ liệu detailVocabulary lên recycle view
+     * @param vocabularyId
+     */
     private void initRcvDetailVocabulary(int vocabularyId) {
         detailVocabularyAdapter = new DetailVocabularyAdapter(VocabularyController.getInstance(dbHelper)
                 .findDetailVocabulary(vocabularyId));
