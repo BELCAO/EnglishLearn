@@ -117,7 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         grammarDAO.insert(new Grammar(1, "Present Simple", "Hiện Tai Đơn", "S + V1 + O", 1));
         grammarDAO.insert(new Grammar(2, "Past Simple", "Quá khứ đơn", "S + V2/ED + O", 1));
         grammarDAO.insert(new Grammar(3, "Present Perfect", "Hiện Tại Hoàn Thành", "We haven’t met for a long time", 1));
-        grammarDAO.insert(new Grammar(4, "present continous", "Hiện Tại Tiếp Diễn", "She is dancing", 1));
+        grammarDAO.insert(new Grammar(4, "Present continous", "Hiện Tại Tiếp Diễn", "She is dancing", 1));
         //Thêm các mục Grammar khác vào đây
 
         // Thêm dữ liệu cho DetailGrammar

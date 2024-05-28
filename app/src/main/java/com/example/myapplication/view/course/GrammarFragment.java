@@ -1,13 +1,11 @@
 package com.example.myapplication.view.course;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -18,26 +16,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.controller.GrammarController;
-import com.example.myapplication.controller.VocabularyController;
 import com.example.myapplication.domain.model.Grammar;
-import com.example.myapplication.domain.model.Vocabulary;
 import com.example.myapplication.domain.service.database.DatabaseHelper;
-import com.example.myapplication.view.activity.ChooseVocabularyActivity;
 import com.example.myapplication.view.adapter.GrammarAdapter;
-import com.example.myapplication.view.adapter.VocabularyAdapter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GrammarFragment extends Fragment implements View.OnClickListener {
+public class GrammarFragment extends Fragment {
 
     private RecyclerView rcvGrammar;
     private GrammarAdapter grammarAdapter;
     private List<Grammar> grammarList;
     private Spinner spnLesson;
     private DatabaseHelper dbHelper;
-    private Button btnChooseGrammar;
     private int courseId;
     private final int LIMIT = 10;
     private int size;
@@ -65,9 +57,6 @@ public class GrammarFragment extends Fragment implements View.OnClickListener {
 
         spnLesson = view.findViewById(R.id.spn_lesson);
         rcvGrammar = view.findViewById(R.id.rcv_grammar);
-        btnChooseGrammar = view.findViewById(R.id.btn_choose_grammar);
-
-        btnChooseGrammar.setOnClickListener(this);
 
         initSpnLesson();
         initGrammar();
@@ -111,7 +100,7 @@ public class GrammarFragment extends Fragment implements View.OnClickListener {
     }
 
     /**
-     * Lấy ra danh sách ngữ pháp của khóa học từ database dựa vào mã khóa học
+     * Lấy ra danh sách từ vựng của khóa học từ database dựa vào mã khóa học
      * @param courseId
      */
     private void findGrammar(int courseId) {
@@ -128,23 +117,5 @@ public class GrammarFragment extends Fragment implements View.OnClickListener {
 
         rcvGrammar.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
         rcvGrammar.setAdapter(grammarAdapter);
-    }
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-
-        /**
-         * Nếu click "Chọn từ" sẽ chuyển sang màn hình ChooseGrammarActivity
-         *
-         */
-        if(id == R.id.btn_choose_grammar) {
-            int offset = spnLesson.getSelectedItemPosition() * LIMIT;
-            List<Grammar> targetGrammar = new ArrayList<>(grammarList.subList(offset, Math.min(offset + LIMIT, size)));
-
-            Intent intent = new Intent(requireActivity(), ChooseVocabularyActivity.class);
-            intent.putExtra("list_grammar", (Serializable) targetGrammar);
-            startActivity(intent);
-        }
     }
 }

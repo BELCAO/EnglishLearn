@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,13 +50,13 @@ public class DetailGrammarActivity extends AppCompatActivity {
     }
 
     private void initVocabulary(Grammar grammar) {
-        TextView tvWord = findViewById(R.id.tv_grammar);
-        tvWord.setText(grammar.getRule_name());
+        TextView tvWord = findViewById(R.id.tv_word);
+        tvWord.setText(grammar.getDescription());
 
         TextView tvPhonetic = findViewById(R.id.tv_phonetic);
-        tvPhonetic.setText(grammar.getDescription());
+        tvPhonetic.setText(grammar.getExample());
 
-        toolbar.setTitle(grammar.getExample());
+        toolbar.setTitle(grammar.getRule_name());
     }
 
     private void initRcvDetailVocabulary(int grammarId) {

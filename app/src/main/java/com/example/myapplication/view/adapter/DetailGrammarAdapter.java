@@ -27,7 +27,7 @@ public class DetailGrammarAdapter extends RecyclerView.Adapter<DetailGrammarAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new DetailGrammarAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.viewholder_detail_vocabulary, parent, false
+                R.layout.viewholder_detail_grammar, parent, false
         ));
     }
 
@@ -49,15 +49,14 @@ public class DetailGrammarAdapter extends RecyclerView.Adapter<DetailGrammarAdap
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvType = itemView.findViewById(R.id.tv_type);
-            tvDescription = itemView.findViewById(R.id.tv_word_mean);
-            tvExample = itemView.findViewById(R.id.tv_sample_sentence);
+            tvType = itemView.findViewById(R.id.tv_type_grammar);
+            tvDescription = itemView.findViewById(R.id.tv_description_grammar);
+            tvExample = itemView.findViewById(R.id.tv_example_grammar);
 
         }
 
         public void initView(DetailGrammar detailGrammar) {
-
-            tvType.setText(""+ detailGrammar.getId());
+            tvType.setText(detailGrammar.getId() + "");
             tvExample.setText(detailGrammar.getExample());
             tvDescription.setText(detailGrammar.getDetail());
 //            tvSampleSentenceMean.setText(detailVocabulary.getSampleSentenceMean());

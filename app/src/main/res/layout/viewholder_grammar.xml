@@ -7,14 +7,13 @@
     android:id="@+id/grammar">
 
     <RelativeLayout
-        android:paddingVertical="@dimen/padding_activity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp">
 
         <LinearLayout
-            android:layout_width="368dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="-31dp"
             android:layout_toStartOf="@id/imv_fav"
 
             android:orientation="vertical">
@@ -31,18 +30,20 @@
 
             <TextView
                 android:id="@+id/tv_description"
+                android:textColor="@color/secondary"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="description"
-                android:textColor="@color/dark_gray"
                 android:textSize="@dimen/text_small" />
 
             <TextView
                 android:id="@+id/tv_example"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Example" />
+                android:text="Example"
+                />
         </LinearLayout>
 
         <ImageView
@@ -51,7 +52,6 @@
             android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/padding_activity"/>
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

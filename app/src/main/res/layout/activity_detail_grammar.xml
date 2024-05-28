@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.activity.DetailGrammarActivity">
+    tools:context=".view.activity.DetailVocabularyActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/tv_grammar"
+                android:id="@+id/tv_word"
                 android:text="Subject"
                 android:textStyle="bold"
                 android:textSize="@dimen/text_normal_2"
@@ -58,7 +58,7 @@
             android:layout_marginTop="10dp"
             android:textColor="@color/dark_gray"
             android:textStyle="bold"
-
+            android:text="/ˈsʌb.dʒɪkt/"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
