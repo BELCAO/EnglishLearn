@@ -2,6 +2,7 @@ package com.example.myapplication.domain.service.database;
 
 import static androidx.test.InstrumentationRegistry.getContext;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -156,6 +157,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "courseId INTEGER CONSTRAINT courseId REFERENCES courses(id) ON DELETE CASCADE)";
 
         db.execSQL(query);
+    }
+    private void createEnrolledCourse(SQLiteDatabase db) {
+        String query = "CREATE TABLE IF NOT EXISTS enrolled_courses (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "course_id INTEGER)";
+
+        db.execSQL(query);
+    }
+
+    public void insertEnrolledCourse(int courseId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("course_id", courseId);
+        db.insert("enrolled_courses", null, values);
+        db.close();
+    }
+
+    public boolean isCourseEnrolled(int courseId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM enrolled_courses WHERE course_id = ?", new String[]{String.valueOf(courseId)});
+        boolean enrolled = cursor.getCount() > 0;
+        cursor.close();
+        db.close();
+        return enrolled;
     }
 
 

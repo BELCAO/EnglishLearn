@@ -16,23 +16,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.domain.model.Course;
+import com.example.myapplication.domain.service.database.DatabaseHelper;
 import com.example.myapplication.view.activity.LessonActivity;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
     private List<Course> courses;
-
+    private static Map<Integer, Boolean> enrolledCoursesMap = new HashMap<>();
     /**
      * Lấy Courses List
+     *
      * @param courses
      */
     public CourseAdapter(List<Course> courses) {
         this.courses = courses;
     }
-
     /**
      * Tạo ViewHolder
      *@return Chuyển layout -> ViewHolder
@@ -50,7 +53,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Course item = courses.get(position);
-        holder.initView(item);
+        holder.initView(item, enrolledCoursesMap);
     }
 
     /**
@@ -62,6 +65,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         return courses != null? courses.size() : 0;
     }
 
+    public void setEnrolledCoursesMap(Map<Integer, Boolean> enrolledCoursesMap) {
+        this.enrolledCoursesMap = enrolledCoursesMap;
+    }
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvCourseName, tvCoursePrice;
         Button btnRegister;
@@ -76,44 +82,53 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             btnRegister.setOnClickListener(this);
         }
 
-        public void initView(Course course) {
+        public void initView(Course course, Map<Integer, Boolean> enrolledCoursesMap) {
             this.course = course;
-
             tvCourseName.setText(course.getName());
             int price = course.getPrice();
+            boolean isEnrolled = enrolledCoursesMap.containsKey(course.getId()) && enrolledCoursesMap.get(course.getId());
             /**
              * Nếu khóa học có tính phí thì hiển thị giá tiền + nút đăng ký
              * Nếu đã đăng ký (hoặc free) thì sẽ là nút "Học ngay"
              */
-            if(price > 0) {
+            if (isEnrolled || price ==0) {
+                enrolledCoursesMap.put(course.getId(), true);
+                tvCoursePrice.setText("");
+                btnRegister.setText("Học ngay");
+                btnRegister.setBackgroundColor(itemView.getResources().getColor(R.color.primary));
+            } else if (price > 0) {
                 NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
                 tvCoursePrice.setText(currencyFormat.format(price));
                 btnRegister.setText("Đăng ký");
             }
-            else {
-                tvCoursePrice.setText("");
-                btnRegister.setText("Học ngay");
-                btnRegister.setBackgroundColor(itemView.getResources().getColor(R.color.primary));
-            }
         }
 
+        /**
+         *  Nếu khóa học miễn phí, người dùng có thể đăng ký mà không cần xác nhận
+         *  Hiển thị hộp thoại xác nhận đăng ký
+         */
         @Override
         public void onClick(View v) {
+            boolean isEnrolled = enrolledCoursesMap.containsKey(course.getId()) && enrolledCoursesMap.get(course.getId());
+            if(!isEnrolled){
+                showConfirmationDialog();
+            }
+            else{
+                Intent intent = new Intent(itemView.getContext(), LessonActivity.class);
+                intent.putExtra("course_id", course.getId());
+                itemView.getContext().startActivity(intent);
+            }
+
+        }
+
+        private void showConfirmationDialog() {
             AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
             builder.setMessage("Xác nhận đăng ký khóa học với " + course.getPrice() + " VND");
             builder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    // Xử lý thanh toán và hiển thị thông báo thanh toán thành công
-                    Toast.makeText(itemView.getContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
-                    // Chuyển nút Đăng ký thành nút Học ngay
-                    tvCoursePrice.setText("");
-                    btnRegister.setText("Học ngay");
-                    btnRegister.setBackgroundColor(itemView.getResources().getColor(R.color.primary));
-                    // Chuyển sang lesson activity
-                    Intent intent = new Intent(itemView.getContext(), LessonActivity.class);
-                    intent.putExtra("course_id", course.getId());
-                    itemView.getContext().startActivity(intent);
+                    // Xử lý đăng ký
+                    enrollCourse();
                 }
             });
             builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -124,6 +139,18 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             });
             builder.show();
         }
+
+        private void enrollCourse() {
+            /**
+             * cập nhật trạng thái đăng ký trong csdl, cập nhật nút đăng ký
+              */
+            enrolledCoursesMap.put(course.getId(), true);
+            Toast.makeText(itemView.getContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+            tvCoursePrice.setText("");
+            btnRegister.setText("Học ngay");
+            btnRegister.setBackgroundColor(itemView.getResources().getColor(R.color.primary));
+        }
+
 
     }
 }
