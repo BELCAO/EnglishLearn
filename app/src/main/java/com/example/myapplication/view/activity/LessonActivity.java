@@ -45,6 +45,11 @@ public class LessonActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> finish());
     }
 
+    /**
+     * Tạo 2 tab của 2 fragment "Từ vựng" và "Ngữ pháp"
+     * Truyền đi courseId để VocabularyFragment lấy ra danh sách từ vựng của khóa học
+     * Mặc định VocabularyFragment sẽ hiển thị
+     */
     private void initTabLayout() {
         Intent intent = getIntent();
         int courseId = intent.getIntExtra("course_id", -1);

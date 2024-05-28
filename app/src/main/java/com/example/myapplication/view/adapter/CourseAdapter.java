@@ -1,6 +1,7 @@
 package com.example.myapplication.view.adapter;
 
 import android.content.Intent;
+import android.icu.text.NumberFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.myapplication.domain.model.Course;
 import com.example.myapplication.view.activity.LessonActivity;
 
 import java.util.List;
+import java.util.Locale;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
@@ -60,7 +62,16 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             this.course = course;
 
             tvCourseName.setText(course.getName());
-            tvCoursePrice.setText(course.getPrice() + " VNĐ");
+            int price = course.getPrice();
+            if(price > 0) {
+                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+                tvCoursePrice.setText(currencyFormat.format(price));
+                btnRegister.setText("Đăng ký");
+            }
+            else {
+                btnRegister.setText("Học ngay");
+                btnRegister.setBackgroundColor(itemView.getResources().getColor(R.color.primary));
+            }
         }
 
         @Override

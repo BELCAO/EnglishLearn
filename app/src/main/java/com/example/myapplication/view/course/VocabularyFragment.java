@@ -40,13 +40,18 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
     private int size;
 
     /**
-     * Khởi tạo Fragment với mã khóa học để tìm các từ vựng thuộc khóa học đó
+     * courseId dùng để lấy ra danh sách từ vựng của khóa học tương ứng
      * @param courseId
      */
     public VocabularyFragment(int courseId) {
         this.courseId = courseId;
     }
 
+    /**
+     * Sau khi Fragment được khởi tạo sẽ tìm danh sách từ vựng dựa vào courseId
+     * @param savedInstanceState If the fragment is being re-created from
+     * a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,19 +82,20 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
     /**
      * Ánh xạ các bài học cho khóa học
      * Mỗi bài học sẽ gồm LIMIT từ vựng
+     * Bắt sự kiện thay đổi bài học
      */
     private void initSpnLesson() {
         List<String> lessons = new ArrayList<>();
         double numberOfLesson =  Math.ceil((double) size / LIMIT);
 
-        // Hiển thị selection (Bài 1, Bài 2,...). Mỗi bài có LIMIT từ vựng
+        // Hiển thị selection (Bài 1, Bài 2,...). Mỗi bài học có LIMIT từ vựng
         for (int i = 1; i <= numberOfLesson; i++) {
             lessons.add("Bài " + i);
         }
         ArrayAdapter adapter = new ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, lessons);
         spnLesson.setAdapter(adapter);
 
-        // Bắt sự kiện chọn item
+        // Bắt sự kiện chọn bài học
         spnLesson.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -97,7 +103,8 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
                  * offset là giá trị bắt đầu, ví dụ:
                  * Bài 1 -> position = 0 -> offset = 0 * LIMIT = 0
                  * Bài 2 -> position = 1 -> offset = 1 * LIMIT = LIMIT
-                 * Lấy ra từ vựng trong khoảng từ offset đến MIN giữa LIMIT và size (tránh danh sách từ vựng không đủ LIMIT)
+                 * Lấy ra từ vựng trong khoảng từ offset đến MIN giữa (offset + LIMIT) và size để hiển thị
+                 * Min để tránh danh sách từ vựng không đủ LIMIT
                  */
                 int offset = position * LIMIT;
                 vocabularyAdapter.setVocabularyList(vocabularyList.subList(offset, Math.min(offset + LIMIT, size)));
@@ -112,7 +119,7 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
     }
 
     /**
-     * Lấy ra danh sách từ vựng của khóa học từ database dựa vào mã khóa học
+     * Lấy ra danh sách từ vựng của khóa học từ database dựa vào courseId
      * @param courseId
      */
     private void findVocabulary(int courseId) {
@@ -135,15 +142,12 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
         int id = v.getId();
 
         /**
-         * Nếu click "Chọn từ" sẽ chuyển sang màn hình ChooseVocabularyActivity
+         * Nếu click "Luyện từ" sẽ chuyển sang màn hình ChooseVocabularyActivity
          * Đồng thời truyền đi danh sách từ vựng cần luyện của bài học
          */
         if(id == R.id.btn_choose_vocabulary) {
-            int offset = spnLesson.getSelectedItemPosition() * LIMIT;
-            List<Vocabulary> targetVocabulary = new ArrayList<>(vocabularyList.subList(offset, Math.min(offset + LIMIT, size)));
-
             Intent intent = new Intent(requireActivity(), ChooseVocabularyActivity.class);
-            intent.putExtra("list_vocabulary", (Serializable) targetVocabulary);
+            intent.putExtra("list_vocabulary", (Serializable) new ArrayList<Vocabulary>(vocabularyAdapter.getVocabularyList()));
             startActivity(intent);
         }
     }

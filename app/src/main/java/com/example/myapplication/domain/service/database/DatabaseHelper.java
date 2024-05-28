@@ -26,7 +26,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "englearn.db";
     public static final int DB_VERSION = 1;
-    private static final String PREF_CREATED_DATA = "created_data";
 
     private DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -43,6 +42,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         createVocabularyDetail(db);
     }
 
+    /**
+     * Insert dữ liệu vào database
+     */
     public void createData() {
         CourseDAO courseDAO = CourseDAO.getInstance(this);
         courseDAO.insert(new Course(1, "TOEIC (cơ bản)", 0));
@@ -110,6 +112,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Tạo bảng courses
+     * @param db
+     */
     private void createCourses(SQLiteDatabase db) {
         String query = "CREATE TABLE IF NOT EXISTS courses (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -119,6 +125,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    /**
+     * Tạo bảng vocabulary_details
+     * @param db
+     */
     private void createVocabularyDetail(SQLiteDatabase db) {
         String query = "CREATE TABLE IF NOT EXISTS vocabulary_details (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -133,6 +143,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    /**
+     * Tạo bảng vocabularies
+     * @param db
+     */
     private void createVocabulary(SQLiteDatabase db) {
         String query = "CREATE TABLE IF NOT EXISTS vocabularies (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +

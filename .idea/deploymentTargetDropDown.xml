@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="deploymentTargetDropDown">
+<<<<<<< HEAD
     <targetSelectedWithDropDown>
       <Target>
         <type value="QUICK_BOOT_TARGET" />
@@ -13,5 +14,24 @@
       </Target>
     </targetSelectedWithDropDown>
     <timeTargetWasSelectedWithDropDown value="2024-05-27T12:54:53.959795400Z" />
+=======
+    <value>
+      <entry key="TestDetailVocabularyDAO">
+        <State />
+      </entry>
+      <entry key="TestVocabularyDAO">
+        <State />
+      </entry>
+      <entry key="app">
+        <State />
+      </entry>
+      <entry key="testFind()">
+        <State />
+      </entry>
+      <entry key="testFindAll()">
+        <State />
+      </entry>
+    </value>
+>>>>>>> 9bd05ab1510e2f2ff632b4abf2fe9d81f27cbb38
   </component>
 </project>
